@@ -1,0 +1,375 @@
+@import "tailwindcss";
+
+/* ──────────────────────────────────────────────────────────────────────────
+   VECTOR — design tokens
+   A dark, precise interface language: a fine grid, generous spacing, one
+   mint accent that marks live data and primary actions. Colour is for state,
+   never decoration. Tokens are CSS variables so the demo app can switch to a
+   light theme. Contrast (dark): frost on deep 15.6:1 · muted on deep 5.4:1 ·
+   mint on deep 12.9:1 · deep on mint 12.9:1.
+   ────────────────────────────────────────────────────────────────────────── */
+
+@theme {
+  --color-deep: var(--c-deep);
+  --color-panel: var(--c-panel);
+  --color-raised: var(--c-raised);
+  --color-grid: var(--c-grid);
+  --color-frost: var(--c-frost);
+  --color-muted: var(--c-muted);
+  --color-mint: var(--c-mint);
+  --color-mint-ink: var(--c-mint-ink);
+  --color-amber: var(--c-amber);
+  --color-rose: var(--c-rose);
+  --color-sky: var(--c-sky);
+
+  --font-sans: var(--font-mona), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-martian), ui-monospace, monospace;
+
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+:root {
+  --c-deep: #0a0d12;
+  --c-panel: #121821;
+  --c-raised: #18202b;
+  --c-grid: #1e2733;
+  --c-frost: #dce3ea;
+  --c-muted: #8593a3;
+  --c-mint: #5cf2b0;
+  --c-mint-ink: #0a0d12;
+  --c-amber: #f5b85a;
+  --c-rose: #ff7a8a;
+  --c-sky: #7cb8ff;
+  --gutter: clamp(1.25rem, 3.6vw, 3.5rem);
+  --section: clamp(5rem, 10vw, 9rem);
+  --header-h: 4rem;
+  --bar-h: 2.25rem;
+  color-scheme: dark;
+}
+
+[data-theme="light"] {
+  --c-deep: #f4f6f9;
+  --c-panel: #ffffff;
+  --c-raised: #eef1f5;
+  --c-grid: #dde3ea;
+  --c-frost: #0d1520;
+  --c-muted: #56606d;
+  --c-mint: #0a7a4f;
+  --c-mint-ink: #ffffff;
+  --c-amber: #9a5b00;
+  --c-rose: #c02538;
+  --c-sky: #1f5fb8;
+  color-scheme: light;
+}
+
+/* Tailwind's --color-* tokens resolve where they're declared (:root), so a
+   themed subtree must redeclare them to pick up its own --c-* values. */
+[data-theme] {
+  --color-deep: var(--c-deep);
+  --color-panel: var(--c-panel);
+  --color-raised: var(--c-raised);
+  --color-grid: var(--c-grid);
+  --color-frost: var(--c-frost);
+  --color-muted: var(--c-muted);
+  --color-mint: var(--c-mint);
+  --color-mint-ink: var(--c-mint-ink);
+  --color-amber: var(--c-amber);
+  --color-rose: var(--c-rose);
+  --color-sky: var(--c-sky);
+  color: var(--c-frost);
+}
+
+@layer base {
+  html {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    scroll-padding-top: calc(var(--header-h) + 1rem);
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    html {
+      scroll-behavior: smooth;
+    }
+  }
+
+  body {
+    background: var(--c-deep);
+    color: var(--c-frost);
+    font-family: var(--font-sans);
+    line-height: 1.6;
+    overflow-x: clip;
+  }
+
+  ::selection {
+    background: var(--c-mint);
+    color: var(--c-mint-ink);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--c-mint);
+    outline-offset: 2px;
+    border-radius: 4px;
+  }
+}
+
+@layer components {
+  .shell {
+    width: 100%;
+    max-width: 1440px;
+    margin-inline: auto;
+    padding-inline: var(--gutter);
+  }
+
+  .section {
+    padding-block: var(--section);
+  }
+
+  .t-display {
+    font-stretch: 108%;
+    font-weight: 600;
+    letter-spacing: -0.04em;
+    line-height: 0.98;
+    font-size: clamp(2.8rem, 6.6vw, 6.4rem);
+    text-wrap: balance;
+  }
+
+  .t-h2 {
+    font-stretch: 106%;
+    font-weight: 600;
+    letter-spacing: -0.035em;
+    line-height: 1.04;
+    font-size: clamp(2rem, 4.2vw, 3.75rem);
+    text-wrap: balance;
+  }
+
+  .t-h3 {
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    line-height: 1.2;
+    font-size: clamp(1.15rem, 1.5vw, 1.4rem);
+  }
+
+  .t-lead {
+    font-size: clamp(1.05rem, 1.35vw, 1.25rem);
+    line-height: 1.6;
+    color: var(--c-muted);
+    text-wrap: pretty;
+  }
+
+  .t-mono {
+    font-family: var(--font-mono);
+    font-stretch: 87.5%;
+    font-size: 0.75rem;
+    letter-spacing: 0.02em;
+  }
+
+  .t-eyebrow {
+    font-family: var(--font-mono);
+    font-stretch: 87.5%;
+    font-size: 0.72rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--c-mint);
+  }
+
+  .num {
+    font-family: var(--font-mono);
+    font-stretch: 87.5%;
+    font-variant-numeric: tabular-nums;
+    letter-spacing: -0.02em;
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.55rem;
+    min-height: 2.75rem;
+    padding-inline: 1.15rem;
+    border-radius: 8px;
+    font-size: 0.92rem;
+    font-weight: 560;
+    white-space: nowrap;
+    transition: background-color 200ms, color 200ms, border-color 200ms, box-shadow 200ms;
+    cursor: pointer;
+  }
+
+  .btn-mint {
+    background: var(--c-mint);
+    color: var(--c-mint-ink);
+    box-shadow: 0 0 0 0 rgb(92 242 176 / 0);
+  }
+
+  .btn-mint:hover {
+    box-shadow: 0 0 0 4px rgb(92 242 176 / 0.18);
+  }
+
+  .btn-line {
+    border: 1px solid var(--c-grid);
+    background: var(--c-panel);
+    color: var(--c-frost);
+  }
+
+  .btn-line:hover {
+    border-color: var(--c-muted);
+  }
+
+  .btn[disabled] {
+    opacity: 0.5;
+    cursor: not-allowed;
+    box-shadow: none;
+  }
+
+  .panel {
+    background: var(--c-panel);
+    border: 1px solid var(--c-grid);
+    border-radius: 12px;
+  }
+
+  .field-input {
+    width: 100%;
+    min-height: 2.6rem;
+    padding: 0.5rem 0.8rem;
+    background: var(--c-deep);
+    border: 1px solid var(--c-grid);
+    border-radius: 8px;
+    color: var(--c-frost);
+    font-size: 0.95rem;
+  }
+
+  .field-input:focus {
+    outline: none;
+    border-color: var(--c-mint);
+    box-shadow: 0 0 0 3px rgb(92 242 176 / 0.18);
+  }
+
+  .kbd {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    padding: 0.1rem 0.4rem;
+    border: 1px solid var(--c-grid);
+    border-bottom-width: 2px;
+    border-radius: 5px;
+    color: var(--c-muted);
+  }
+
+  /* The fine background grid that gives the interface its precision. */
+  .bg-grid {
+    background-image:
+      linear-gradient(to right, rgb(220 227 234 / 0.045) 1px, transparent 1px),
+      linear-gradient(to bottom, rgb(220 227 234 / 0.045) 1px, transparent 1px);
+    background-size: 48px 48px;
+  }
+
+  [data-theme="light"] .bg-grid {
+    background-image:
+      linear-gradient(to right, rgb(13 21 32 / 0.05) 1px, transparent 1px),
+      linear-gradient(to bottom, rgb(13 21 32 / 0.05) 1px, transparent 1px);
+  }
+}
+
+/* ── Motion ─────────────────────────────────────────────────────────────── */
+
+html.js [data-reveal] {
+  opacity: 0;
+  transform: translate3d(0, 1.25rem, 0);
+  transition:
+    opacity 800ms var(--ease-out),
+    transform 1000ms var(--ease-out);
+  transition-delay: calc(var(--d, 0) * 80ms);
+}
+
+html.js [data-reveal].is-in {
+  opacity: 1;
+  transform: none;
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 0.9rem, 0);
+  }
+}
+
+.rise {
+  animation: rise 900ms var(--ease-out) both;
+  animation-delay: calc(100ms + var(--d, 0) * 100ms);
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+}
+
+.fade-in {
+  animation: fade-in 400ms var(--ease-out) both;
+}
+
+@keyframes row-in {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+    background: rgb(92 242 176 / 0.12);
+  }
+}
+
+.row-in {
+  animation: row-in 900ms var(--ease-out) both;
+}
+
+@keyframes pulse-dot {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.35;
+  }
+}
+
+.live-dot {
+  animation: pulse-dot 1.6s ease-in-out infinite;
+}
+
+@keyframes flow {
+  to {
+    stroke-dashoffset: -24;
+  }
+}
+
+.edge-flow {
+  stroke-dasharray: 6 6;
+  animation: flow 0.8s linear infinite;
+}
+
+@keyframes slide-in-right {
+  from {
+    transform: translateX(100%);
+  }
+}
+
+.no-scrollbar {
+  scrollbar-width: none;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 1ms !important;
+    animation-iteration-count: 1 !important;
+    animation-delay: 0ms !important;
+    transition-duration: 1ms !important;
+    transition-delay: 0ms !important;
+  }
+
+  html.js [data-reveal] {
+    opacity: 1;
+    transform: none;
+  }
+}

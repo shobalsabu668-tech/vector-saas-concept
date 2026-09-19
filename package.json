@@ -1,0 +1,33 @@
+{
+  "name": "vector-saas-concept",
+  "version": "1.0.0",
+  "private": true,
+  "description": "VECTOR — a self-initiated concept site for a fictional workflow-automation platform, where the marketing site is the product demo. Designed and built by Shobal Sabu.",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "eslint .",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "next": "15.5.25",
+    "react": "19.2.8",
+    "react-dom": "19.2.8"
+  },
+  "devDependencies": {
+    "@eslint/eslintrc": "^3.3.1",
+    "@tailwindcss/postcss": "^4.1.13",
+    "@types/node": "^22.15.3",
+    "@types/react": "^19.1.9",
+    "@types/react-dom": "^19.1.7",
+    "eslint": "^9.23.0",
+    "eslint-config-next": "15.5.25",
+    "postcss": "^8.5.3",
+    "tailwindcss": "^4.1.13",
+    "typescript": "^5.8.3"
+  },
+  "engines": {
+    "node": ">=18.18.0"
+  }
+}
