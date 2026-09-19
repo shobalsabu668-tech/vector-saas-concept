@@ -71,12 +71,14 @@ export function useRun(workflow: Workflow) {
         timers.current.push(
           window.setTimeout(() => setStates((s) => ({ ...s, [id]: "active" })), at),
           window.setTimeout(() => {
-            elapsed += ms;
+            // Capture now: updaters run lazily, so reading `elapsed` inside one
+            // would see later steps' time when timers fire close together.
+            const t = (elapsed += ms);
             setStates((s) => ({ ...s, [id]: "done" }));
             const edge = p.edges[i];
             if (edge) setHot((h) => new Set(h).add(edge));
             const extra = step.kind === "branch" ? ` → ${branchYes ? "yes" : "no"}` : "";
-            setLog((l) => [...l, { t: elapsed, text: `✓ ${step.title}${extra}`, tone: step.kind === "branch" ? "warn" : "ok" }]);
+            setLog((l) => [...l, { t, text: `✓ ${step.title}${extra}`, tone: step.kind === "branch" ? "warn" : "ok" }]);
           }, at + wait),
         );
         at += wait + (still ? 1 : 120);
