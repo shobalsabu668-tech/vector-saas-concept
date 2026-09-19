@@ -1,7 +1,9 @@
 # VECTOR — workflow automation (concept website)
 
-> **A self-initiated concept by [Shobal Sabu](https://github.com/shobalsabu668-tech).**
+> **A self-initiated concept by [Shobal Sabu](https://shobal-sabu-portfolio.vercel.app).**
 > VECTOR is a fictional SaaS product. It isn't a real company or client work, and every number on the site is generated.
+
+**Live site:** https://vector-saas-concept.vercel.app · **Case study:** https://shobal-sabu-portfolio.vercel.app/work/vector
 
 VECTOR explores a SaaS website where **the marketing site is the product demo**. Instead of describing features, it
 lets visitors use a working slice of the product: a live dashboard, a workflow they can run, pricing that does the
